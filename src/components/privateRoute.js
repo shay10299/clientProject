@@ -7,7 +7,7 @@ import store from '../store'
 const PrivateRoute = ({ component: Component, ...rest }) => (
 
     <Route {...rest} render={(props) => (
-        store.getState().isLogged
+        localStorage.getItem('token')
             ? <Component {...props} />
             : <Redirect to='/' />
     )} />

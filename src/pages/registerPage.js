@@ -11,6 +11,8 @@ import { logIn, logOut, tokenInsert } from '../actions'
 import register from '../axiosRequests/register'
 import store from '../store'
 import { Redirect } from 'react-router';
+import validateToken from '../functions/validateToken.js';
+
 const useStyles = makeStyles(theme => ({
     root: {
         '& .MuiTextField-root': {
@@ -26,12 +28,12 @@ const useStyles = makeStyles(theme => ({
 
 const RegisterPage = () => {
     const classes = useStyles();
-    const isLogged = useSelector(state => state.isLogged)
     const dispatch = useDispatch()
     const [FormEvalue, setFormEvalue] = useState('')// Form of username
     const [FormPvalue, setFormPvalue] = useState('')//Password form
     const [FormNvalue, setFormNvalue] = useState('')// Form of username
     const [FormAvalue, setFormAvalue] = useState('')//Password form
+    const [isLogged, setisLogged] = useState(false)
 
     const handlesubmit = async () => {
         if (!FormNvalue || !FormAvalue || !FormEvalue || !FormPvalue)
@@ -41,6 +43,9 @@ const RegisterPage = () => {
             dispatch(tokenInsert(response.data))
             localStorage.setItem("token", response.data)
             dispatch(logIn())
+            localStorage.setItem('isLogged', isLogged)
+            setisLogged(true)
+
 
         }
         catch (error) {
@@ -53,6 +58,20 @@ const RegisterPage = () => {
         }
 
     }
+    useEffect(() => {
+        validateToken().then((result) => {
+            if (result) {
+                setisLogged(true)
+            }
+            else {
+                setisLogged(false)
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
+
+    }, [])
+
     if (isLogged)
         return (<Redirect to="/home" />);
     return (
