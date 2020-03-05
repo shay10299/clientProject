@@ -8,10 +8,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Drawer from '@material-ui/core/Drawer';
-import store from "../store";
 import validateToken from '../functions/validateToken.js';
 
 const drawerWidth = 240;
@@ -69,6 +67,13 @@ const DenseAppBar = () => {
                     <Typography variant="h4" color="inherit" className={classes.title}>
                         Party organizer
                      </Typography>
+                    <Button style={{
+                        padding: "18px 36px",
+                        fontSize: "18px",
+                        color: "#FFFFFF"
+                    }} href="/home">
+                        home
+                    </Button>
                     {isLogged ? <Button style={{
                         padding: "18px 36px",
                         fontSize: "18px",
@@ -86,8 +91,8 @@ const DenseAppBar = () => {
                         padding: "18px 36px",
                         fontSize: "18px",
                         color: "#FFFFFF"
-                    }} href="/home">
-                        home
+                    }} href="/register">
+                        register
                     </Button>
                 </Toolbar>
             </AppBar>
@@ -100,13 +105,23 @@ const DenseAppBar = () => {
             >
                 <div className={classes.toolbar} />
                 <List>
-                    <ListItem button component="a" href="/MyParties">
+                    <ListItem button component="a" href="/home">
                         <ListItemText primary={'My parties'} />
                     </ListItem>
+                    <Divider />
+                    <ListItem button component="a" href="/AllParties">
+                        <ListItemText primary={'All parties'} />
+                    </ListItem>
+                    <Divider />
+                    <ListItem button component="a" href="/CreatePartyPage">
+                        <ListItemText primary={'Create party page'} />
+                    </ListItem>
                 </List>
+
             </Drawer> : null}
 
-        </div>
+
+        </div >
     );
 }
 export default DenseAppBar

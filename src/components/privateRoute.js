@@ -3,7 +3,6 @@ import {
     Route,
     Redirect,
 } from 'react-router-dom'
-import store from '../store'
 const PrivateRoute = ({ component: Component, ...rest }) => (
 
     <Route {...rest} render={(props) => (

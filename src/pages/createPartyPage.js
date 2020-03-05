@@ -8,9 +8,9 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { useDispatch } from 'react-redux'
 import { logIn, tokenInsert } from '../actions'
-import register from '../axiosRequests/register'
+import CreateParty from '../axiosRequests/CreateParty'
 import { Redirect } from 'react-router';
-import validateToken from '../functions/validateToken.js';
+import validate from '../functions/validate.js';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 
@@ -27,54 +27,35 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const RegisterPage = () => {
+const CreatePartyPage = () => {
     const classes = useStyles();
-    const dispatch = useDispatch()
-    const [FormEvalue, setFormEvalue] = useState('')// Form of username
-    const [FormPvalue, setFormPvalue] = useState('')//Password form
-    const [FormNvalue, setFormNvalue] = useState('')// Form of username
-    const [FormAvalue, setFormAvalue] = useState('')//Password form
-    const [isLogged, setisLogged] = useState(false)
+    const [FormNvalue, setFormNvalue] = useState('')
+    const [FormDvalue, setFormDvalue] = useState('')
+    const [FormHvalue, setFormHvalue] = useState('')//Password form
 
     const handlesubmit = async () => {
-        if (!FormNvalue || !FormAvalue || !FormEvalue || !FormPvalue)
+        if (!FormNvalue || !FormDvalue || !FormHvalue)
             alert('One or more fields are required!')
         try {
-            const response = await register(FormEvalue, FormPvalue, FormNvalue, FormAvalue)
-            dispatch(tokenInsert(response.data))
-            localStorage.setItem("token", response.data)
-            dispatch(logIn())
-            localStorage.setItem('isLogged', isLogged)
-            setisLogged(true)
+            const response = await CreateParty(FormNvalue, FormDvalue, FormHvalue)
+            console.log(response.status)
+            if (response.status === 200) {
+                alert("Party created successfuly!")
 
+            }
 
         }
         catch (error) {
             if (error.response.data === "Invalid input")
-                alert("Username must be 3-30 characters, age between 3 to 120, valid email ")
-            else if (error.response.data === "User already registered")
-                alert("User already registered!")
-            else if (error.response.data === "User already registered")
-                alert("Something failed , try again!")
+                alert("wrong format!")
+
         }
 
     }
     useEffect(() => {
-        validateToken().then((result) => {
-            if (result) {
-                setisLogged(true)
-            }
-            else {
-                setisLogged(false)
-            }
-        }).catch((error) => {
-            console.log(error)
-        })
-
+        validate()
     }, [])
 
-    if (isLogged)
-        return (<Redirect to="/home" />);
     return (
         <body>
             <navbar>
@@ -86,7 +67,7 @@ const RegisterPage = () => {
                     <Container fixed>
                         <BorderWrapper borderColour="blue" >
                             <Typography variant="h4" component="h2">
-                                Hello! please register.
+                                Hello! please create your Party.
                     </Typography>
                             <br></br>
 
@@ -102,22 +83,15 @@ const RegisterPage = () => {
 
                                 >
                                     <Grid item  >
-                                        <TextField id="name" label="Name" variant="outlined" onChange={e => setFormNvalue(e.target.value)} />
+                                        <TextField id="Party name" label="Party name" variant="outlined" onChange={e => setFormNvalue(e.target.value)} />
                                     </Grid>
                                     <Grid item  >
-                                        <TextField id="age" label="Age" variant="outlined" onChange={e => setFormAvalue(e.target.value)} />
+                                        <TextField id="Date" label="Date" variant="outlined" onChange={e => setFormDvalue(e.target.value)} />
                                     </Grid>
                                     <Grid item  >
-                                        <TextField id="email" label="Email" variant="outlined" onChange={e => setFormEvalue(e.target.value)} />
+                                        <TextField id="Hour" label="Hour(0-24)" variant="outlined" onChange={e => setFormHvalue(e.target.value)} />
                                     </Grid>
-                                    <Grid item >
-                                        <TextField id='password'
-                                            type="password"
-                                            label="Password"
-                                            variant="outlined"
-                                            onChange={e => setFormPvalue(e.target.value)}>
-                                        </TextField>
-                                    </Grid>
+
                                 </Grid>
 
                             </form>
@@ -142,4 +116,4 @@ const RegisterPage = () => {
 
 }
 
-export default RegisterPage;
+export default CreatePartyPage;

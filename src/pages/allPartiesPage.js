@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { logIn, logOut, tokenInsert } from '../actions'
 import login from '../axiosRequests/login.js';
 import validate from '../functions/validate'
-import FetchParties from '../functions/FetchParties.js';
+import FetchAllParties from '../functions/FetchAllParties.js';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -59,18 +59,18 @@ const useStyles = makeStyles(theme => ({
 
 
 
-const HomePage = () => {
+const AllPartiesPage = () => {
     const classes = useStyles();
-    const [myPartiesArray, setmyPartiesArray] = useState([])
+    const [AllpartiesArray, setAllpartiesArray] = useState([])
     const [errorMessage, seterrorMessage] = useState('')
     useEffect(() => {
         validate()
-        FetchParties().then((result) => {
+        FetchAllParties().then((result) => {
             if (result === "No parties found")
                 seterrorMessage(result)
 
             else {
-                setmyPartiesArray(result.data)
+                setAllpartiesArray(result.data)
                 console.log(result.data)
             }
         }).catch((error) => {
@@ -87,7 +87,7 @@ const HomePage = () => {
                 <React.Fragment>
                     <CssBaseline />
                     <Container fixed>
-                        {myPartiesArray.length > 0 ? <TableContainer component={Paper}>
+                        {AllpartiesArray.length > 0 ? <TableContainer component={Paper}>
                             <Table className={classes.table} aria-label="customized table">
                                 <TableHead>
                                     <TableRow>
@@ -98,7 +98,7 @@ const HomePage = () => {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {myPartiesArray.map(row => (
+                                    {AllpartiesArray.map(row => (
                                         <StyledTableRow key={row.PartyName}>
                                             <StyledTableCell component="th" scope="row">
                                                 {row.PartyName}
@@ -115,6 +115,7 @@ const HomePage = () => {
 
                     </Container>
                 </React.Fragment>
+
             </div>
 
 
@@ -124,4 +125,4 @@ const HomePage = () => {
     );
 }
 
-export default HomePage;
+export default AllPartiesPage;
