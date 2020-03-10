@@ -11,6 +11,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Drawer from '@material-ui/core/Drawer';
 import validateToken from '../functions/validateToken.js';
+import validateAdmin from '../functions/validateAdmin.js';
 
 const drawerWidth = 240;
 
@@ -38,6 +39,7 @@ const useStyles = makeStyles(theme => ({
 const DenseAppBar = () => {
     const classes = useStyles();
     const [isLogged, setisLogged] = useState(false)
+    const [isAdmin, setisAdmin] = useState(false)
 
     const handleLogOut = () => {
         localStorage.removeItem('token')
@@ -50,6 +52,16 @@ const DenseAppBar = () => {
             }
             else {
                 setisLogged(false)
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
+        validateAdmin().then((result) => {
+            if (result) {
+                setisAdmin(true)
+            }
+            else {
+                setisAdmin(false)
             }
         }).catch((error) => {
             console.log(error)
@@ -116,6 +128,15 @@ const DenseAppBar = () => {
                     <ListItem button component="a" href="/CreatePartyPage">
                         <ListItemText primary={'Create party page'} />
                     </ListItem>
+                    <Divider />
+                    {isAdmin ? <ListItem button component="a" href="/AllUsers">
+                        <ListItemText primary={'All users'} />
+                    </ListItem> : null}
+                    <Divider />
+                    {isAdmin ? <ListItem button component="a" href="/DeleteUser">
+                        <ListItemText primary={'Delete user'} />
+                    </ListItem> : null}
+
                 </List>
 
             </Drawer> : null}

@@ -20,6 +20,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
+import FetchAllusers from '../functions/FetchAllusers.js';
 
 
 const StyledTableCell = withStyles(theme => ({
@@ -59,18 +60,18 @@ const useStyles = makeStyles(theme => ({
 
 
 
-const AllPartiesPage = () => {
+const AllUsersPage = () => {
     const classes = useStyles();
-    const [AllpartiesArray, setAllpartiesArray] = useState([])
+    const [AllusersArray, setAllusersArray] = useState([])
     const [errorMessage, seterrorMessage] = useState('')
     useEffect(() => {
         validate()
-        FetchAllParties().then((result) => {
-            if (result === "No parties found")
+        FetchAllusers().then((result) => {
+            if (result === "No users found")
                 seterrorMessage(result)
 
             else {
-                setAllpartiesArray(result.data)
+                setAllusersArray(result.data)
                 console.log(result.data)
             }
         }).catch((error) => {
@@ -87,25 +88,23 @@ const AllPartiesPage = () => {
                 <React.Fragment>
                     <CssBaseline />
                     <Container fixed>
-                        {AllpartiesArray.length > 0 ? <TableContainer component={Paper}>
+                        {AllusersArray.length > 0 ? <TableContainer component={Paper}>
                             <Table className={classes.table} aria-label="customized table">
                                 <TableHead>
                                     <TableRow>
-                                        <StyledTableCell>Party name</StyledTableCell>
-                                        <StyledTableCell align="right">Date</StyledTableCell>
-                                        <StyledTableCell align="right">Number of participants</StyledTableCell>
-                                        <StyledTableCell align="right">Hour</StyledTableCell>
+                                        <StyledTableCell>Name</StyledTableCell>
+                                        <StyledTableCell align="right">Email</StyledTableCell>
+                                        <StyledTableCell align="right">Age</StyledTableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {AllpartiesArray.map(row => (
-                                        <StyledTableRow key={row.PartyName}>
+                                    {AllusersArray.map(row => (
+                                        <StyledTableRow key={row.name}>
                                             <StyledTableCell component="th" scope="row">
-                                                {row.PartyName}
+                                                {row.name}
                                             </StyledTableCell>
-                                            <StyledTableCell align="right">{row.date}</StyledTableCell>
-                                            <StyledTableCell align="right">{row.NumberOfParticipants}</StyledTableCell>
-                                            <StyledTableCell align="right">{row.hour}</StyledTableCell>
+                                            <StyledTableCell align="right">{row.email}</StyledTableCell>
+                                            <StyledTableCell align="right">{row.age}</StyledTableCell>
                                         </StyledTableRow>
                                     ))}
                                 </TableBody>
@@ -125,4 +124,4 @@ const AllPartiesPage = () => {
     );
 }
 
-export default AllPartiesPage;
+export default AllUsersPage;

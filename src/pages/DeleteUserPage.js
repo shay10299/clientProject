@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { useDispatch } from 'react-redux'
 import { logIn, tokenInsert } from '../actions'
-import CreateParty from '../axiosRequests/CreateParty'
+import DeleteUser from '../axiosRequests/DeleteUser'
 import { Redirect } from 'react-router';
 import validate from '../functions/validate.js';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -29,28 +29,29 @@ const useStyles = makeStyles(theme => ({
 
 const CreatePartyPage = () => {
     const classes = useStyles();
-    const [FormNvalue, setFormNvalue] = useState('')
-    const [FormDvalue, setFormDvalue] = useState('')
-    const [FormHvalue, setFormHvalue] = useState('')//Password form
+    const [FormIDvalue, setFormIDvalue] = useState('')
+
 
     const handlesubmit = async () => {
-        if (!FormNvalue || !FormDvalue || !FormHvalue)
-            return alert('One or more fields are required!')
+        if (!FormIDvalue)
+            return alert('field is required!')
         try {
-            const response = await CreateParty(FormNvalue, FormDvalue, FormHvalue)
+            const response = await DeleteUser(FormIDvalue)
             console.log(response.status)
             if (response.status === 200) {
-                alert("Party created successfuly!")
-
+                alert("User delete successfuly!")
             }
 
         }
         catch (error) {
-            if (error.response.data === "Invalid input")
-                alert("wrong format!")
-            else if (error.response.data === "Party already exists")
-                alert("Party already exists!")
+            if (error.response.data === "User does not exist")
+                alert("User does not exist")
+            else if (error.response.data === "You can't delete yourself!")
+                alert("You can't delete yourself!")
+            else {
+                alert("Something failed")
 
+            }
         }
 
     }
@@ -69,7 +70,7 @@ const CreatePartyPage = () => {
                     <Container fixed>
                         <BorderWrapper borderColour="blue" >
                             <Typography variant="h4" component="h2">
-                                Hello! please create your Party.
+                                Enter the id of the user you want to delete.
                     </Typography>
                             <br></br>
 
@@ -85,13 +86,7 @@ const CreatePartyPage = () => {
 
                                 >
                                     <Grid item  >
-                                        <TextField id="Party name" label="Party name" variant="outlined" onChange={e => setFormNvalue(e.target.value)} />
-                                    </Grid>
-                                    <Grid item  >
-                                        <TextField id="Date" label="Date" variant="outlined" onChange={e => setFormDvalue(e.target.value)} />
-                                    </Grid>
-                                    <Grid item  >
-                                        <TextField id="Hour" label="Hour(0-24)" variant="outlined" onChange={e => setFormHvalue(e.target.value)} />
+                                        <TextField id="ID" label="ID" variant="outlined" onChange={e => setFormIDvalue(e.target.value)} />
                                     </Grid>
 
                                 </Grid>

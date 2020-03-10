@@ -52,7 +52,7 @@ const useStyles = makeStyles(theme => ({
     },
     wraper: {
         marginLeft: "16%",
-        marginTop: "8%",
+        marginTop: "5%",
 
     }
 }));

@@ -6,6 +6,9 @@ import home from '../pages/homePage'
 import PrivateRoute from './privateRoute'
 import allPartiesPage from '../pages/allPartiesPage'
 import CreatePartyPage from '../pages/createPartyPage'
+import AllUsersPage from '../pages/AllUsersPage'
+import DeleteUserPage from '../pages/DeleteUserPage'
+
 function Router() {
     return (
         <BrowserRouter>
@@ -17,6 +20,8 @@ function Router() {
                     <PrivateRoute path="/home" component={home} exact />
                     <PrivateRoute path="/AllParties" component={allPartiesPage} exact />
                     <PrivateRoute path="/CreatePartyPage" component={CreatePartyPage} exact />
+                    <PrivateRoute path="/AllUsers" component={AllUsersPage} exact />
+                    <PrivateRoute path="/DeleteUser" component={DeleteUserPage} exact />
 
                 </Switch>
             </div>
