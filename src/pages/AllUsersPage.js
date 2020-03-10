@@ -92,17 +92,20 @@ const AllUsersPage = () => {
                             <Table className={classes.table} aria-label="customized table">
                                 <TableHead>
                                     <TableRow>
-                                        <StyledTableCell>Name</StyledTableCell>
+                                        <StyledTableCell >ID</StyledTableCell>
+                                        <StyledTableCell align="right">Name</StyledTableCell>
                                         <StyledTableCell align="right">Email</StyledTableCell>
                                         <StyledTableCell align="right">Age</StyledTableCell>
+
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {AllusersArray.map(row => (
-                                        <StyledTableRow key={row.name}>
+                                        <StyledTableRow key={row.id}>
                                             <StyledTableCell component="th" scope="row">
-                                                {row.name}
+                                                {row.id}
                                             </StyledTableCell>
+                                            <StyledTableCell align="right">{row.name}</StyledTableCell>
                                             <StyledTableCell align="right">{row.email}</StyledTableCell>
                                             <StyledTableCell align="right">{row.age}</StyledTableCell>
                                         </StyledTableRow>
