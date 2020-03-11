@@ -8,9 +8,9 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { useDispatch } from 'react-redux'
 import { logIn, tokenInsert } from '../actions'
-import login from '../axiosRequests/login'
+import CreateReq from '../axiosRequests/CreateEnterRequest'
 import { Redirect } from 'react-router';
-import validateToken from '../functions/validateToken.js';
+import validate from '../functions/validate.js';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 
@@ -27,66 +27,58 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const LoginPage = () => {
+const CreateEnterReqPage = () => {
     const classes = useStyles();
-    const dispatch = useDispatch()
-    const [FormEvalue, setFormEvalue] = useState('')
-    const [FormPvalue, setFormPvalue] = useState('')
-    const [isLogged, setisLogged] = useState(false)
+    const [FormIDvalue, setFormIDvalue] = useState('')
+
 
     const handlesubmit = async () => {
+        if (!FormIDvalue)
+            return alert('field is required!')
         try {
-            const response = await login(FormEvalue, FormPvalue)
-            dispatch(tokenInsert(response.data))
-            localStorage.setItem("token", response.data)
-            dispatch(logIn())
-            setisLogged(true)
+            const response = await CreateReq(FormIDvalue)
+            console.log(response.status)
+            if (response.status === 200) {
+                alert("Request created successfuly!")
 
+            }
 
         }
         catch (error) {
             if (error.response.data === "Invalid input")
-                alert("Too short email or password or wrong format!")
-            else if (error.response.data === "Invalid email or password")
-                alert("Wrong email or password!")
-        }
+                alert("wrong format!")
+            else if (error.response.data === "Party does not exist")
+                alert("Party does not exist!")
+            else if (error.response.data === "Can't request your party")
+                alert("Can't request your party")
+            else if (error.response.data === "Party already has been requested")
+                alert("Party already has been requested")
 
+
+        }
 
     }
     useEffect(() => {
-        validateToken().then((result) => {
-            if (result) {
-                setisLogged(true)
-            }
-            else {
-                setisLogged(false)
-            }
-        }).catch((error) => {
-            console.log(error)
-        })
-
+        validate()
     }, [])
 
-    if (isLogged)
-        return (<Redirect to="/home" />);
     return (
         <body>
             <navbar>
                 < DenseAppBar />
             </navbar>
-
             <div className={classes.wraper}>
                 <React.Fragment>
                     <CssBaseline />
                     <Container fixed>
                         <BorderWrapper borderColour="blue" >
                             <Typography variant="h4" component="h2">
-                                Hello! please login.
-                    </Typography>
+                                Hello! please create your request.
+                             </Typography>
+                            <Typography variant="h4" component="h2">
+                                Enter the id of the party you want to enter.
+                             </Typography>
                             <br></br>
-
-
-
                             <br></br>
                             <form className={classes.root} noValidate autoComplete="off">
                                 <Grid
@@ -97,18 +89,10 @@ const LoginPage = () => {
 
                                 >
                                     <Grid item  >
-                                        <TextField id="email" label="Email" variant="outlined" onChange={e => setFormEvalue(e.target.value)} />
+                                        <TextField id="id" label="ID" variant="outlined" onChange={e => setFormIDvalue(e.target.value)} />
                                     </Grid>
-                                    <Grid item >
-                                        <TextField id='password'
-                                            type="password"
-                                            label="Password"
-                                            variant="outlined"
-                                            onChange={e => setFormPvalue(e.target.value)}>
-                                        </TextField>
-                                    </Grid>
-                                </Grid>
 
+                                </Grid>
                             </form>
                             <br></br>
                             <Button variant="contained" color="primary" onClick={handlesubmit}>
@@ -117,17 +101,9 @@ const LoginPage = () => {
                             <br></br>
                             <br></br>
 
-                            <Typography variant="h4" component="h2">
-                                If you do not have an account you need to register.
-                    </Typography>
-                            <br></br>
-                            <Button variant="contained" color="secondary" href="/register">
-                                Register
-                    </Button>
                         </BorderWrapper>
                     </Container>
                 </React.Fragment>
-
             </div>
 
 
@@ -139,4 +115,4 @@ const LoginPage = () => {
 
 }
 
-export default LoginPage;
+export default CreateEnterReqPage;

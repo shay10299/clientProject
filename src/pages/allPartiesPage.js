@@ -91,7 +91,9 @@ const AllPartiesPage = () => {
                             <Table className={classes.table} aria-label="customized table">
                                 <TableHead>
                                     <TableRow>
-                                        <StyledTableCell>Party name</StyledTableCell>
+                                        <StyledTableCell>ID</StyledTableCell>
+
+                                        <StyledTableCell align="right">Party name</StyledTableCell>
                                         <StyledTableCell align="right">Date</StyledTableCell>
                                         <StyledTableCell align="right">Number of participants</StyledTableCell>
                                         <StyledTableCell align="right">Hour</StyledTableCell>
@@ -99,10 +101,11 @@ const AllPartiesPage = () => {
                                 </TableHead>
                                 <TableBody>
                                     {AllpartiesArray.map(row => (
-                                        <StyledTableRow key={row.PartyName}>
+                                        <StyledTableRow key={row.id}>
                                             <StyledTableCell component="th" scope="row">
-                                                {row.PartyName}
+                                                {row.id}
                                             </StyledTableCell>
+                                            <StyledTableCell align="right">{row.PartyName}</StyledTableCell>
                                             <StyledTableCell align="right">{row.date}</StyledTableCell>
                                             <StyledTableCell align="right">{row.NumberOfParticipants}</StyledTableCell>
                                             <StyledTableCell align="right">{row.hour}</StyledTableCell>

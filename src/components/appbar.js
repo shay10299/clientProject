@@ -129,6 +129,18 @@ const DenseAppBar = () => {
                         <ListItemText primary={'Create party page'} />
                     </ListItem>
                     <Divider />
+                    <ListItem button component="a" href="/CreateEnterReqPage">
+                        <ListItemText primary={'Create request to enter a party'} />
+                    </ListItem>
+                    <Divider />
+                    <ListItem button component="a" href="/MyEnterReq">
+                        <ListItemText primary={'My requests to enter a party'} />
+                    </ListItem>
+                    <Divider />
+                    <ListItem button component="a" href="/MyEnterReqToConfirm">
+                        <ListItemText primary={'My requests to confirm'} />
+                    </ListItem>
+                    <Divider />
                     {isAdmin ? <ListItem button component="a" href="/AllUsers">
                         <ListItemText primary={'All users'} />
                     </ListItem> : null}

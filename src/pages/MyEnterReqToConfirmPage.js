@@ -10,7 +10,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { logIn, logOut, tokenInsert } from '../actions'
 import login from '../axiosRequests/login.js';
 import validate from '../functions/validate'
-import FetchParties from '../functions/FetchParties.js';
+import FetchReqToConfirm from '../functions/FetchReqToConfitm';
+import ConfirmReq from '../axiosRequests/ConfirmReq';
+
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -59,18 +61,37 @@ const useStyles = makeStyles(theme => ({
 
 
 
-const HomePage = () => {
+const MyEnterReqToConfirmPage = () => {
     const classes = useStyles();
-    const [myPartiesArray, setmyPartiesArray] = useState([])
+    const [AllreqArray, setAllreqArray] = useState([])
     const [errorMessage, seterrorMessage] = useState('')
+
+    const handlesubmit = async (PartyID, UserID) => {
+        try {
+            const response = await ConfirmReq(PartyID, UserID)
+            console.log(response.status)
+            if (response.status === 200) {
+                alert("Confirmed!")
+                window.location.reload();
+
+
+            }
+        }
+        catch (error) {
+            if (error.response.data === "Something failed")
+                alert("Something failed")
+        }
+    }
+
+
     useEffect(() => {
         validate()
-        FetchParties().then((result) => {
-            if (result === "No parties found")
+        FetchReqToConfirm().then((result) => {
+            if (result === "No requests found")
                 seterrorMessage(result)
 
             else {
-                setmyPartiesArray(result.data)
+                setAllreqArray(result.data)
                 console.log(result.data)
             }
         }).catch((error) => {
@@ -87,27 +108,30 @@ const HomePage = () => {
                 <React.Fragment>
                     <CssBaseline />
                     <Container fixed>
-                        {myPartiesArray.length > 0 ? <TableContainer component={Paper}>
+                        {AllreqArray.length > 0 ? <TableContainer component={Paper}>
                             <Table className={classes.table} aria-label="customized table">
                                 <TableHead>
                                     <TableRow>
                                         <StyledTableCell>ID</StyledTableCell>
-                                        <StyledTableCell align="right">Party name</StyledTableCell>
-                                        <StyledTableCell align="right">Date</StyledTableCell>
-                                        <StyledTableCell align="right">Number of participants</StyledTableCell>
-                                        <StyledTableCell align="right">Hour</StyledTableCell>
+
+                                        <StyledTableCell align="right">Party ID</StyledTableCell>
+                                        <StyledTableCell align="right">User ID</StyledTableCell>
+                                        <StyledTableCell align="right">Request date</StyledTableCell>
+                                        <StyledTableCell align="right">Confirm?</StyledTableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {myPartiesArray.map(row => (
+                                    {AllreqArray.map(row => (
                                         <StyledTableRow key={row.id}>
                                             <StyledTableCell component="th" scope="row">
                                                 {row.id}
                                             </StyledTableCell>
-                                            <StyledTableCell align="right">{row.PartyName}</StyledTableCell>
-                                            <StyledTableCell align="right">{row.date}</StyledTableCell>
-                                            <StyledTableCell align="right">{row.NumberOfParticipants}</StyledTableCell>
-                                            <StyledTableCell align="right">{row.hour}</StyledTableCell>
+                                            <StyledTableCell align="right">{row.PartyID}</StyledTableCell>
+                                            <StyledTableCell align="right">{row.UserID}</StyledTableCell>
+                                            <StyledTableCell align="right">{row.requestDate}</StyledTableCell>
+                                            <StyledTableCell align="right">{!row.confirmedByPartyOwner ? <Button variant="contained" color="secondary" onClick={() => handlesubmit(row.PartyID, row.UserID)}>
+                                                Confirm</Button> : <Button variant="contained" color="secondary" disabled>
+                                                    Confirmed</Button>}</StyledTableCell>
                                         </StyledTableRow>
                                     ))}
                                 </TableBody>
@@ -117,6 +141,7 @@ const HomePage = () => {
 
                     </Container>
                 </React.Fragment>
+
             </div>
 
 
@@ -126,4 +151,4 @@ const HomePage = () => {
     );
 }
 
-export default HomePage;
+export default MyEnterReqToConfirmPage;

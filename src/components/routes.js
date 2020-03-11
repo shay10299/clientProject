@@ -8,6 +8,9 @@ import allPartiesPage from '../pages/allPartiesPage'
 import CreatePartyPage from '../pages/createPartyPage'
 import AllUsersPage from '../pages/AllUsersPage'
 import DeleteUserPage from '../pages/DeleteUserPage'
+import CreateEnterReqPage from '../pages/CreateEnterReqPage'
+import MyEnterReqPage from '../pages/MyEnterReqPage'
+import MyEnterReqToConfirmPage from '../pages/MyEnterReqToConfirmPage'
 
 function Router() {
     return (
@@ -22,6 +25,9 @@ function Router() {
                     <PrivateRoute path="/CreatePartyPage" component={CreatePartyPage} exact />
                     <PrivateRoute path="/AllUsers" component={AllUsersPage} exact />
                     <PrivateRoute path="/DeleteUser" component={DeleteUserPage} exact />
+                    <PrivateRoute path="/CreateEnterReqPage" component={CreateEnterReqPage} exact />
+                    <PrivateRoute path="/MyEnterReq" component={MyEnterReqPage} exact />
+                    <PrivateRoute path="/MyEnterReqToConfirm" component={MyEnterReqToConfirmPage} exact />
 
                 </Switch>
             </div>
