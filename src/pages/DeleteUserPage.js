@@ -11,6 +11,8 @@ import { logIn, tokenInsert } from '../actions'
 import DeleteUser from '../axiosRequests/DeleteUser'
 import { Redirect } from 'react-router';
 import validate from '../functions/validate.js';
+import validateAdmin from '../functions/validateAdmin'
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 
@@ -57,6 +59,7 @@ const CreatePartyPage = () => {
     }
     useEffect(() => {
         validate()
+        validateAdmin()
     }, [])
 
     return (

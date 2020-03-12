@@ -11,6 +11,7 @@ import { logIn, tokenInsert } from '../actions'
 import CreateReq from '../axiosRequests/CreateEnterRequest'
 import { Redirect } from 'react-router';
 import validate from '../functions/validate.js';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 

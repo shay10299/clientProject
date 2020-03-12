@@ -10,6 +10,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { logIn, logOut, tokenInsert } from '../actions'
 import login from '../axiosRequests/login.js';
 import validate from '../functions/validate'
+import validateAdmin from '../functions/validateAdmin'
+
 import FetchAllParties from '../functions/FetchAllParties.js';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -66,6 +68,7 @@ const AllUsersPage = () => {
     const [errorMessage, seterrorMessage] = useState('')
     useEffect(() => {
         validate()
+        validateAdmin()
         FetchAllusers().then((result) => {
             if (result === "No users found")
                 seterrorMessage(result)

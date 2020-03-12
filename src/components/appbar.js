@@ -11,7 +11,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Drawer from '@material-ui/core/Drawer';
 import validateToken from '../functions/validateToken.js';
-import validateAdmin from '../functions/validateAdmin.js';
+import validateAdmin from '../functions/validateAdminForAppBar.js';
 
 const drawerWidth = 240;
 
