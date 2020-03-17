@@ -49,6 +49,8 @@ const LoginPage = () => {
                 alert("Too short email or password or wrong format!")
             else if (error.response.data === "Invalid email or password")
                 alert("Wrong email or password!")
+            else if (error.response.data === "User does not exist")
+                alert("User does not exist")
         }
 
 
