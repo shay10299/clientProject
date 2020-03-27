@@ -6,7 +6,7 @@ const ConfirmReq = (PartyID, UserID) => {
     }
     return axios({
         method: 'post',
-        url: 'http://localhost:3001/api/EnterPartyReq/confirm',
+        url: 'http://192.168.99.100:3001/api/EnterPartyReq/confirm',
         headers,
         data: {
             PartyID: PartyID,

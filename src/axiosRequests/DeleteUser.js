@@ -6,7 +6,7 @@ const DeleteUser = (formIDvalue) => {
     }
     return axios({
         method: 'post',
-        url: 'http://localhost:3001/api/user/DeleteUser',
+        url: 'http://192.168.99.100:3001/api/user/DeleteUser',
         headers,
         data: {
             id: formIDvalue

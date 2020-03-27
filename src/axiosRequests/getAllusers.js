@@ -6,7 +6,7 @@ const getAllusers = (token) => {
     }
     return axios({
         method: 'get',
-        url: 'http://localhost:3001/api/user/AllUsers',
+        url: 'http://192.168.99.100:3001/api/user/AllUsers',
         headers
     })
 

@@ -6,7 +6,7 @@ const MyEnterRequestToConfirm = (token) => {
     }
     return axios({
         method: 'get',
-        url: 'http://localhost:3001/api/EnterPartyReq/myRequestsToConfirm',
+        url: 'http://192.168.99.100:3001/api/EnterPartyReq/myRequestsToConfirm',
         headers
     })
 

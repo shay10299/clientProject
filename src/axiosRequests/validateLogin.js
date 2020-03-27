@@ -4,9 +4,9 @@ const validateLogin = (token) => {
     const headers = {
         'x-auth-token': token
     }
-   return axios({
+    return axios({
         method: 'post',
-        url: 'http://localhost:3001/api/user/validate',
+        url: 'http://192.168.99.100:3001/api/user/validate',
         headers
     })
 }

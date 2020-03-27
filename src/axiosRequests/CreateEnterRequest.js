@@ -6,7 +6,7 @@ const CreateEnterRequest = (formIDvalue) => {
     }
     return axios({
         method: 'post',
-        url: 'http://localhost:3001/api/EnterPartyReq/create',
+        url: 'http://192.168.99.100:3001/api/EnterPartyReq/create',
         headers,
         data: {
             PartyID: formIDvalue

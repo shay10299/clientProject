@@ -6,7 +6,7 @@ const getAllParties = (token) => {
     }
     return axios({
         method: 'get',
-        url: 'http://localhost:3001/api/party/allParties',
+        url: 'http://192.168.99.100:3001/api/party/allParties',
         headers
     })
 

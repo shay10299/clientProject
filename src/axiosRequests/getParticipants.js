@@ -6,7 +6,7 @@ const getParticipants = (PartyID) => {
     }
     return axios({
         method: 'post',
-        url: 'http://localhost:3001/api/party/PartyParticipants',
+        url: 'http://192.168.99.100:3001/api/party/PartyParticipants',
         headers,
         data: {
             PartyID: PartyID,
